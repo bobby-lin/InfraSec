@@ -1,4 +1,4 @@
-#Docker Basics
+# Docker Basics
 References
 - https://docs.docker.com/
 
@@ -77,7 +77,7 @@ Check which port is opened for a running container
 ```
 docker port <container name or id>
 ```
-###OS
+### OS
 Running Ubuntu / Centos (no docker entry point)
 ```
 docker run -d -t -i ubuntu:14.04 /bin/bash

@@ -1,4 +1,4 @@
-#Docker Networks
+# Docker Networks
 The default bridge network driver allow containers to communicate with each other when running on the same docker host.
 
 List networks
@@ -30,18 +30,18 @@ Creating network alias
 docker network connect --alias <name> <name of network> <container name>
 ```
 
-###Security Tips
+### Security Tips
 - Manually expose the port via `-p`
 - All external exposed port must be closed by default
 - Create your frontend and backend to be in the same Docker network.
 
 NIC == Network Interface Controller
 
-###DNS
+### DNS
 - Container should not rely on IP addresses for inter-communication
 - Using custom networks, you can have built-in DNS (reference by Container name)
 
-###Exercise
+### Exercise
 Create two containers in the same custom network. Run a ping or curl command from one container to test connection to the other container.
 ```
 docker exec -it nginx curl nginx_server

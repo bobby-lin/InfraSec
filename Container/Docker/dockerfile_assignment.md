@@ -1,4 +1,4 @@
-##Explanation of Dockerfile
+## Explanation of Dockerfile
 To create a dockerfile, you will need to understand the dependencies of the application including: 
 - OS version
 - OS files required
