@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    container_name: psql
+    environment: 
+      POSTGRES_PASSWORD: 'mysecretpassword'
+  cms:
+    image: drupal
+    ports:
+      - '8080:80'
+    depends_on: 
+      - database
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
