@@ -1,4 +1,6 @@
 # K8s - Replica setls
+Official Documentation: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+
 Replicaset ensures that the desired number of pods are created and maintained.
 
 ## Example of replicaset definition file
