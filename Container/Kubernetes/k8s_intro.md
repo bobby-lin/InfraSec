@@ -23,6 +23,10 @@ Get info on Pods
 ```
 kubectl get pods
 ```
+Delete all pods
+```
+kubectl delete pods --all
+```
 
 List the requested object(s) across all namespaces
 ```
