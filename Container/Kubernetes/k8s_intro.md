@@ -68,3 +68,14 @@ kubectl delete pod/my-apache-xxxxxx-yyyy
 kubectl delete pod/my-apache-7b68fdd849-svtv6
 ```
 Watch the pod will be created.
+
+Which nodes are these pods placed on?
+```
+kubectl get pods -o wide
+```
+Look at the node column
+
+Meaning of `READY` column in the output of the `kubectl get pods` command
+```
+Total Container Running / Total Containers
+```

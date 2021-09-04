@@ -1,0 +1,8 @@
+apiVersion: v2
+kind: Pod
+metadata:
+  name: new-pod
+spec:
+  containers:
+  - name: redis
+    image: redis123
