@@ -6,3 +6,7 @@ spec:
   containers:
   - name: redis
     image: redis123
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
