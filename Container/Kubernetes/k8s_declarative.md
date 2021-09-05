@@ -8,24 +8,6 @@ Create / Update a whole directory of yaml
 ```
 kubectl apply -f file.yaml
 ```
-
-### Inside a basic Pod definition yaml file for K8s
-A YAMl file should consist of the following:
-```yaml
-apiVersion: v1 # Specify K8s api version
-kind: Pod # Pod, Service, ReplicaSet, Deployment
-metadata:
-    name: xxxxxx
-    labels: # Specify the (custom) key-value pairs
-        app: xxxxxx
-spec:
-    containers: # List of containers in the Pod
-      - name: nginx-container
-        image: nginx
-      - name: xxxxxx # another container
-        image: xxxxxx
-```
-
 ### Building YAML file
 kind: List of resources that the cluster supports
 `kubectl api-resources`
