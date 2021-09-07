@@ -1,5 +1,13 @@
 # Manual Scheduling
 
+## If a pod is pending
+The pod is not scheduled
+```
+root@controlplane:~# kubectl get pods
+NAME       READY   STATUS    RESTARTS   AGE
+nginx-app   0/1     Pending   0          13s
+```
+
 ## Example of definition file
 ```yaml
 apiVersion: v1
