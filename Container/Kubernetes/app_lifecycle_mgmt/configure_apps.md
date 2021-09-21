@@ -90,7 +90,7 @@ volumes:
     configMap: 
       name: app-config
 ```
-### Secrets
+## Configuring Secrets
 Note about the risks of K8s secrets: https://kubernetes.io/docs/concepts/configuration/secret/#risks
 
 1) Create Secrets
@@ -155,4 +155,3 @@ volumes:
     secretName: app-secret
 ```
 
-## Configuring Secrets
