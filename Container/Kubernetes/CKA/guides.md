@@ -50,3 +50,9 @@ B) If we use this command, then pods labels cannot be used as selectors
 kubectl create service nodeport nginx --tcp=80:80 --node-port=30080 --dry-run=client -o yaml
 ```
 Most of the time, using the pod label as selectors are useful. So try to use option A to create a service. If you want to change the node-port, then edit the service definition file to add the `nodePort`.kubec
+
+# Tips
+In the exam, there is no verification on whether you did something correctly or not.
+
+#### Self-verification approach:
+You need to verify things yourself. For example, if one task involves creating a pod with specific image, you need to run `kubectl describe pod xxxx` command to check if the name and image is correct.

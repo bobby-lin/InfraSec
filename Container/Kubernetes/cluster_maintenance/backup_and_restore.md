@@ -1,78 +1,64 @@
-# Cluster upgrade
-Kubernetes version format: `X.X.X` (Major.Minor.Patch)
+# Backup and Restore Methods
 
-## Versions
-kube-apiserver version should be higher or equals to other components versions (kube-scheduler and controller-manager).
+## Backup - Resource Configs
 
-kubelet and kube-proxy can be two versions behind the version of kube-apiserver
-
-## Recommended upgrade approach
-Kubernetes support the last three versions from the latest.
-
-We should upgrade if our current version is unsupported now.
-
-It is recommended to upgrade one minor version at a time.
-
-## How to upgrade?
-1) Cloud provider
-2) Kubeadm
 ```
-apt-get upgrade -y kubeadm=1.12.0-00
-systemctl restart kubelet
-kubeadm upgrade plan
-kubeadm upgrade apply v1.12.0
-```
-3) Manual
-
-## Sequences
-Upgrade Master node first
-
-### Worker nodes
-Strategy 1: Kill all nodes
-- Then the new nodes will be recreated with new version as the master node.
-- But this requires downtime
-
-Strategy 2: Kill one node, Upgrade the node, Repeat
-Drain the Worker node
-```
-kubectl drain node-1
-```
-Update worker node
-```
-apt-get upgrade -y kubeadm=1.12.0-00
-apt-get upgrade -y kubelet=1.12.0-00
-kubeadm upgrade node config --kubelet-version v1.12.0
-systemctl restart kubelet
-```
-Uncordon Worker node
-```
-kubectl uncordon node-1
-```
-Strategy 3: Add new nodes to cluster and move workload to new nodes
-
-## Useful commands
-Get cluster version
-```
-kubeadm upgrade plan
-```
-Update kubeadm
-```
-apt update
-apt install kubeadm=1.20.0-00
-```
-Upgrade controlplane
-```
-kubeadm upgrade apply v1.20.0
+kubectl get all --all-namespaces -o yaml > all-deployed-services.yaml
 ```
 
-## Upgrading Worker node
-
-From master node, run `ssh nodeX` to go to `nodeX`
+## Backup - ETCD
+Create backup
 ```
-apt update
-apt install kubeadm=<VERSION>-00
-kubeadm upgrade node # Upgrade the node configuration.
-apt install kubelet=1.20.0-00 # Update kubelet
-systemctl restart kubelet
-exit
+etcdctl snapshot save snapshot.db
+```
+View backup status
+```
+etcdctl snapshot status snapshot.db
+```
+Help
+```
+etcdctl --h
+```
+What is the version of ETCD running on the cluster?
+```
+kubectl describe pod etcd-controlplane --namespace=kube-system
+```
+
+### Steps
+- Ensure etcdctl api3 is used (on master node): `export ETCDCTL_API=3`
+- For each `etcdctl` commands, these fields are mandatory:
+```
+--cacert xxxx
+--cert xxxx
+--endpoints=[127.0.0.1:2379]
+--key xxxxx
+```
+- Stop the kube-apiserver: `service kube-apiserver stop`
+- Restore the backup db from a directory.
+```
+etcdctl snapshot restore snapshot.db --data-dir /var/lib/etcd-from-backup
+```
+- Configure etcd file to use the `data-dir`
+ /etc/kubernetes/manifests/etcd.yaml
+```
+# In etcd.service
+ExecStart=...
+[...]
+--data-dir=/var/lib/etcd-from-backup
+```
+- Reload the service" `systemctl daemon-reload`
+- Start the kube-apiserver: `service kube-apiserver start`
+
+Example:
+```
+etcdctl --endpoints=https://[127.0.0.1]:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save /opt/snapshot-pre-boot.db
+```
+
+```
+ETCDCTL_API=3 etcdctl --data-dir /var/lib/etcd-from-backup \
+snapshot restore /opt/snapshot-pre-boot.db
 ```
