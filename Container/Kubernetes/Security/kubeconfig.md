@@ -27,7 +27,7 @@ clusters:
     insecure-skip-tls-verify: true
     server: https://5.6.7.8
   name: scratch
-  
+
 contexts:
 - context:
     cluster: development
@@ -63,5 +63,6 @@ kubectl config view
 
 Choose a context
 ```
+kubectl config use-context <name of context>
 kubectl config use-context prod-user@production
 ```
