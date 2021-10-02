@@ -53,6 +53,11 @@ Delete a deployment
 ```
 kubectl delete deployment my-apache
 ```
+Execute command in the pod
+```
+kubectl exec webapp -- cat /log/app.log
+```
+
 
 #### Scaling Replicas
 https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
