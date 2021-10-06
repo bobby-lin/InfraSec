@@ -56,3 +56,12 @@ In the exam, there is no verification on whether you did something correctly or 
 
 #### Self-verification approach:
 You need to verify things yourself. For example, if one task involves creating a pod with specific image, you need to run `kubectl describe pod xxxx` command to check if the name and image is correct.
+
+# Networking
+In the CKA exam, for a question that requires you to deploy a network addon, unless specifically directed, you may use any of the solutions described in the link above.
+
+However, the documentation currently does not contain a direct reference to the exact command to be used to deploy a third party network addon.
+
+The links above redirect to third party/ vendor sites or GitHub repositories which cannot be used in the exam. This has been intentionally done to keep the content in the Kubernetes documentation vendor-neutral.
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/#steps-for-the-first-control-plane-node
