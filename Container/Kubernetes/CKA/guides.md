@@ -16,6 +16,11 @@ kubectl create deployment --image=nginx nginx
 ```
 
 ### Dry-run and output the YAML files
+Shortcut for all namespaces
+```
+kubectl get deployments -A
+```
+
 Create Pod yaml file
 ```
 kubectl run nginx --image=nginx --dry-run=client -o yaml

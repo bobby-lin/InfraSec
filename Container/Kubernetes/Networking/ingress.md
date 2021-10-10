@@ -51,3 +51,46 @@ To view Ingress resources:
 ```
 kubectl get ingress --all-namespaces
 ```
+
+Example:
+Create an Ingress resource
+```
+kubectl create ingress ingress-wear-watch --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080" -n app-space --dry-run=client -o yaml > ingress.yaml
+```
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  creationTimestamp: "2021-10-07T01:53:12Z"
+  generation: 1
+  name: ingress-wear-watch
+  namespace: app-space
+  resourceVersion: "5513"
+  uid: 710981a0-508c-4904-b07d-55d6db9bde7b
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: wear-service
+            port:
+              number: 8080
+        path: /wear
+        pathType: Exact
+      - backend:
+          service:
+            name: video-service
+            port:
+              number: 8080
+        path: /watch
+        pathType: Exact
+status:
+  loadBalancer:
+    ingress:
+    - {}
+```
