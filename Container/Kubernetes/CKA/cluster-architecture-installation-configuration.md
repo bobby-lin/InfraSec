@@ -1,4 +1,4 @@
-# Exercises
+# Cluster Architecture, Installation & Configuration (25%)
 
 ## Upgrading Kubernetes cluster with Kubeadm
 
