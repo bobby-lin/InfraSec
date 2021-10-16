@@ -1,6 +1,16 @@
 # Cluster Architecture, Installation & Configuration (25%)
 
-## Upgrading Kubernetes cluster with Kubeadm
+## Manage role based access control (RBAC)
+
+https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+## Use Kubeadm to install a basic cluster
+
+## Manage a highly-available Kubernetes cluster
+
+## Provision underlying infrastructure to deploy a Kubernetes cluster
+
+## Perform a version upgrade on a Kubernetes cluster using Kubeadm
 
 Doc: https://v1-20.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
@@ -94,7 +104,9 @@ kubectl uncordon <node name>
 </p>
 </details>
 
-## Backup `etcd`
+## Implement etcd backup and restore
+
+### Backup `etcd`
 
 <details><summary>Solution</summary>
 <p>
@@ -118,7 +130,7 @@ ETCDCTL_API=3 etcdctl snapshot status /etc/etcd-snapshot.db
 </p>
 </details>
 
-## Restore `etcd` snapshot
+### Restore `etcd` snapshot
 <details><summary>Solution</summary>
 <p>
 
