@@ -1,6 +1,6 @@
 # Exercises
 
-## Upgrading Kubernetes cluster
+## Upgrading Kubernetes cluster with Kubeadm
 
 Doc: https://v1-20.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
@@ -57,6 +57,38 @@ kubectl uncordon <node-to-drain>
 kubectl get nodes
 ```
 `STATUS` column should show `Ready` for all your nodes and the version number should be updated.
+
+</p>
+</details>
+
+## OS Upgrade
+
+<details><summary>Solution</summary>
+<p>
+
+### Make a Node to become unschedulable
+```bash
+# Also move pods to other clusters
+kubectl drain <node name> --ignore-daemonset
+
+# Do not move the pods
+kubectl cordon <node name>
+```
+
+### Upgrade the OS of node
+```
+# Stop Kubernetes from being updated
+sudo apt-mark hold kubeadm kubelet kubectl 
+sudo apt update && sudo apt upgrade -y
+
+# Reboot if required
+sudo reboot
+```
+
+### Set Worker's node to be schedulable again
+```
+kubectl uncordon <node name>
+```
 
 </p>
 </details>
