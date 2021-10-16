@@ -1,3 +1,5 @@
+# Storage (10%)
+
 # Persistent Volume
 Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 
