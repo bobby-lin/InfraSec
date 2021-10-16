@@ -93,3 +93,58 @@ kubectl uncordon <node name>
 
 </p>
 </details>
+
+## Backup `etcd`
+
+<details><summary>Solution</summary>
+<p>
+  
+### Create etcd snapshot (remember to include certs and key info)
+  
+```bash
+# Get info about etcd - endpoints, cacert, cert and key
+cat /etc/kubernetes/manifest/etcd.yaml
+
+ETCDCTL_API=3 etcdctl snapshot save /etc/etcd-snapshot.db \
+--endpoints=https://[127.0.0.1]:2379 \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/server.crt \
+--key /etc/kubernetes/pki/etcd/server.key
+
+# View backup status
+ETCDCTL_API=3 etcdctl snapshot status /etc/etcd-snapshot.db
+```
+
+</p>
+</details>
+
+## Restore `etcd` snapshot
+<details><summary>Solution</summary>
+<p>
+
+```
+# Stop kube-apiserver
+service kube-apiserver stop
+
+# Restore from snapshot
+ETCDCTL_API=3 etcdctl snapshot restore snapshot.db --data-dir /var/lib/etcd-from-backup
+```
+
+### Configure etcd file to use the `data-dir`
+```
+nano /etc/kubernetes/manifests/etcd.yaml
+# In etcd.service
+ExecStart=...
+[...]
+--data-dir=/var/lib/etcd-from-backup
+```
+
+Restart service
+```
+# Reload the service
+systemctl daemon-reload
+service kube-apiserver start
+```
+
+</p>
+</details
