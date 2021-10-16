@@ -1,4 +1,4 @@
-# Services & Networking
+# Services & Networking (20%)
 
 ## Understand host networking configuration on the cluster nodes
 
