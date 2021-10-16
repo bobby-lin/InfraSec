@@ -1,3 +1,5 @@
+# Workloads & Scheduling (15%)
+
 # Deployments
 Doc: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
