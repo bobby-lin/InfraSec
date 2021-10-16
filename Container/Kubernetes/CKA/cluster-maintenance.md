@@ -62,6 +62,7 @@ kubectl get nodes
 </details>
 
 ## OS Upgrade
+Doc: https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/
 
 <details><summary>Solution</summary>
 <p>
