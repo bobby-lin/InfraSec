@@ -24,6 +24,12 @@ From: https://github.com/bmuschko/ckad-crash-course/tree/master/exercises
 1. Create a Pod named `secured` that uses the image `nginx` for a single container. Mount an `emptyDir` volume to the directory `/data/app`.
 2. Files created on the volume should use the filesystem group ID 3000.
 3. Get a shell to the running container and create a new file named `logs.txt` in the directory `/data/app`. List the contents of the directory and write them down.
+You should see that the file is created with group ID 3000.
+```
+drwxrwsrwx 2 root 3000 4096 Jan  1 03:40 .
+drwxr-xr-x 3 root root 4096 Jan  1 03:39 ..
+-rw-r--r-- 1 root 3000    0 Jan  1 03:40 logs.txt
+```
 
 ## Defining a Pod’s Resource Requirements
 
