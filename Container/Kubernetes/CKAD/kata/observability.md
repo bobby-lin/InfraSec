@@ -103,3 +103,27 @@ spec:
   Normal   Started    14s   kubelet            Started container http-server
   Warning  Unhealthy  11s   kubelet            Startup probe failed: dial tcp 10.1.0.93:8999: connect: connection refused
   ```
+  
+ ## Using Ephemeral container to debug distroless image
+ An example of distroless image:
+ ```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: minimal-pod
+spec:
+  containers:
+  - image: k8s.gcr.io/pause:3.1
+    name: pause
+```
+If you try to open an interactive shell, the command will fail.
+```
+> kubectl exec minimal-pod -it -- /bin/sh
+OCI runtime exec failed: exec failed: container_linux.go:380: starting container process caused: exec: "//bin//sh": stat //bin//sh: no such file or directory: unknown
+command terminated with exit code 126
+```
+We can use ephemeral contain to debug pod created with distroless image.
+> Note: The feature is in beta stage (https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/)
+```
+kubectl debug -it minimal-pod --image=busybox --target=minimal-pod
+```
