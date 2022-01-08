@@ -72,3 +72,34 @@ Events:
   Warning  Unhealthy  12h (x138 over 25h)  kubelet  Liveness probe failed: OCI runtime exec failed: exec failed: container_linux.go:380: starting container process caused: exec: "test `find /tmp/heartbeat123.txt -mmin -1`": stat test `find /tmp/heartbeat123.txt -mmin -1`: no such file or directory: unknown
   Normal   Pulling    102s (x49 over 25h)  kubelet  Pulling image "busybox"
 ```
+
+## Startup Probe
+Simulates failure scenario for a startup probe (we can see that the wrong port is used)
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: startup-pod
+spec:
+  containers:
+  - image: httpd:2.4.46
+    name: http-server
+    startupProbe:
+      tcpSocket:
+        port: 8999
+      initialDelaySeconds: 3
+      periodSeconds: 15
+ ```
+ From events of the pod, we can see that a startup probe has failed.
+ ```
+ > kubectl describe pods startup-pod
+ Events:
+  Type     Reason     Age   From               Message
+  ----     ------     ----  ----               -------
+  Normal   Scheduled  25s   default-scheduler  Successfully assigned default/startup-pod to docker-desktop
+  Normal   Pulling    25s   kubelet            Pulling image "httpd:2.4.46"
+  Normal   Pulled     14s   kubelet            Successfully pulled image "httpd:2.4.46" in 10.9422697s
+  Normal   Created    14s   kubelet            Created container http-server
+  Normal   Started    14s   kubelet            Started container http-server
+  Warning  Unhealthy  11s   kubelet            Startup probe failed: dial tcp 10.1.0.93:8999: connect: connection refused
+  ```
